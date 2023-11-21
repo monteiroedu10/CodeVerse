@@ -8,3 +8,4 @@ Este é o espaço onde compartilho uma variedade de projetos e trabalhos pessoai
 
 Este repositório é um espaço aberto para colaborações, sugestões e melhorias. Sinta-se à vontade para clonar, bifurcar e contribuir para qualquer projeto aqui presente. Se você tiver sugestões, correções ou novas ideias, ficarei encantado em receber pull requests e discutir melhorias!
 
+Obrigado por visitar este repositório! Espero que encontre algo interessante e inspirador por aqui. Sinta-se à vontade para explorar, colaborar e fazer parte desta jornada criativa!
