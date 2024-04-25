@@ -1,10 +1,10 @@
-#include <algorithm>
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <queue>
-#include <utility>
-#include <tuple>
+// Inclusão das Bibliotecas
+#include <algorithm>    // Para utilizar a função reverse()
+#include <iostream>     // Para entrada e saída padrão
+#include <fstream>      // Para manipulação de arquivos
+#include <vector>       // Para utilização de vetores
+#include <queue>        // Para utilizar uma fila na busca em largura
+#include <utility>      // Para usar o tipo pair<>
 
 using namespace std;
 
@@ -26,14 +26,16 @@ vector<pair<int, int>> findPath(const vector<vector<int>>& maze, pair<int, int> 
     
     // Fila para armazenar as posições a serem exploradas na busca em largura
     queue<pair<int, int>> q;
+
     // Mapa para armazenar o caminho percorrido pelo rato
     vector<vector<pair<int, int>>> parent(M, vector<pair<int, int>>(N, {-1, -1}));
 
+    // Abre o arquivo de saída
     ofstream outputFile(outputFilename);
 
     if (!outputFile.is_open()) {
         cerr << "Erro ao abrir o arquivo de saída " << outputFilename << endl;
-        return {};
+        return {}; // Retorna um vetor vazio em caso de erro
     }
 
 
@@ -67,6 +69,7 @@ vector<pair<int, int>> findPath(const vector<vector<int>>& maze, pair<int, int> 
     cout << "\n" << endl;
     outputFile << "\n" << endl;
 
+    // Adiciona a posição inicial do rato na fila e marca como visitada
     q.push(start);
     visited[start.first][start.second] = true;
 
@@ -125,7 +128,7 @@ vector<pair<int, int>> findPath(const vector<vector<int>>& maze, pair<int, int> 
 
 
             outputFile.close();
-            return path;
+            return path;    // Retorna o caminho encontrado
         }
 
         // Explora todas as direções possíveis
@@ -143,28 +146,28 @@ vector<pair<int, int>> findPath(const vector<vector<int>>& maze, pair<int, int> 
     }
 
     // Se não foi possível encontrar um caminho até a saída
-    outputFile.close();
-    return {};
+    outputFile.close(); // Fecha o arquivo de saída
+    return {};  // Fecha o arquivo de saída
 }
 
 // Função para ler o labirinto de um arquivo de texto
 vector<vector<int>> readMazeFromFile(const string& filename) {
-    ifstream file(filename);
-    vector<vector<int>> maze;
-    if (file.is_open()) {
+    ifstream file(filename);    // Abre o arquivo para leitura
+    vector<vector<int>> maze;   // Cria uma matriz para armazenar o labirinto
+    if (file.is_open()) {   // Verifica se o arquivo foi aberto com sucesso
         string line;
         while (getline(file, line)) {
             vector<int> row;
             for (char c : line) {
-                row.push_back(c - '0');
+                row.push_back(c - '0'); // Converte o caractere para inteiro e adiciona na linha
             }
-            maze.push_back(row);
+            maze.push_back(row);    // Adiciona a linha na matriz do labirinto
         }
-        file.close();
+        file.close();   // Fecha o arquivo
     } else {
         cerr << "Erro ao abrir o arquivo " << filename << endl;
     }
-    return maze;
+    return maze;    // Retorna o labirinto lido do arquivo
 }
 
 int main() {
@@ -176,6 +179,7 @@ int main() {
     // Lê o labirinto do arquivo
     vector<vector<int>> maze = readMazeFromFile(filename);
 
+    // Posição inicial do rato
     pair<int, int> start;
 
     // Encontra a posição inicial do rato e verifica se existe apenas uma
@@ -190,11 +194,11 @@ int main() {
     }
     if (startCount != 1) {
         cerr << "Erro: O labirinto deve conter exatamente um ponto inicial (valor 2)." << endl;
-        return 1;
+        return 1;   // Retorna 1 em caso de erro
     }
 
     // Encontra o caminho do rato até a saída
     vector<pair<int, int>> path = findPath(maze, start, outputFilename);
 
-    return 0;
+    return 0;   // Retorna 0 indicando que o programa foi executado com sucesso
 }
