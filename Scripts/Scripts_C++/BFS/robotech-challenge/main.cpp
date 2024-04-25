@@ -36,6 +36,37 @@ vector<pair<int, int>> findPath(const vector<vector<int>>& maze, pair<int, int> 
         return {};
     }
 
+
+    cout << "\n\n\n" << endl;
+    cout << "RRRRRRR   OOOOOOO  BBBBBBBB  OOOOOOO  TTTTTTTTT  EEEEEEEE  CCCCCCCC  H     H  \n";
+    cout << "RR    RR OO     OO BB     BB OO     OO    TT     EE        CC       H     H  \n";
+    cout << "RR     RR OO     OO BB     BB OO     OO    TT     EE        CC       H     H  \n";
+    cout << "RR    RR  OO     OO BBBBBBBB  OO     OO    TT     EEEEEEE   CC       HHHHHHH  \n";
+    cout << "RRRRRRR   OO     OO BB     BB OO     OO    TT     EE        CC       H     H  \n";
+    cout << "RR   RR   OO     OO BB     BB OO     OO    TT     EE        CC       H     H  \n";
+    cout << "RR    RR   OOOOOOO  BBBBBBBB   OOOOOOO     TT     EEEEEEEE  CCCCCCCC H     H  \n";
+    cout << "\n\n\n" << endl;
+
+    outputFile << "\n\n\n" << endl;
+    outputFile << "RRRRRRR   OOOOOOO  BBBBBBBB  OOOOOOO  TTTTTTTTT  EEEEEEEE  CCCCCCCC  H     H  \n";
+    outputFile << "RR    RR OO     OO BB     BB OO     OO    TT     EE        CC       H     H  \n";
+    outputFile << "RR     RR OO     OO BB     BB OO     OO    TT     EE        CC       H     H  \n";
+    outputFile << "RR    RR  OO     OO BBBBBBBB  OO     OO    TT     EEEEEEE   CC       HHHHHHH  \n";
+    outputFile << "RRRRRRR   OO     OO BB     BB OO     OO    TT     EE        CC       H     H  \n";
+    outputFile << "RR   RR   OO     OO BB     BB OO     OO    TT     EE        CC       H     H  \n";
+    outputFile << "RR    RR   OOOOOOO  BBBBBBBB   OOOOOOO     TT     EEEEEEEE  CCCCCCCC H     H  \n";
+    outputFile << "\n\n\n" << endl;
+
+
+    cout << "Olá, iniciando a resolução do desafio de  programação da Robotceh: " << endl;
+    outputFile << "Olá, iniciando a resolução do desafio de  programação da Robotceh: " << endl;
+
+    cout << "\n\tEvolução temporal salva em " << outputFilename << endl;
+    outputFile << "\n\tEvolução temporal salva em " << outputFilename << endl;
+
+    cout << "\n" << endl;
+    outputFile << "\n" << endl;
+
     q.push(start);
     visited[start.first][start.second] = true;
 
@@ -49,12 +80,12 @@ vector<pair<int, int>> findPath(const vector<vector<int>>& maze, pair<int, int> 
         int y = current.second;
 
         // Escreve a evolução temporal do rato no arquivo de saída
-        outputFile << "i = " << iteration << "; pos = [" << x +1 << "," << y + 1<< "]" << endl;
-        cout << "i = " << iteration << "; pos = [" << x + 1<< "," << y + 1<< "]" << endl;
+        outputFile << "\t\ti = " << iteration << "; pos = [" << x + 1<< "," << y + 1<< "]" << endl;
+        cout << "\t\ti = " << iteration << "; pos = [" << x + 1<< "," << y + 1<< "]" << endl;
         iteration++;
 
         // Verifica se chegou à saída
-        if (maze[x][y] == 3) {
+        if(maze[x][y] == 3){
             vector<pair<int, int>> path;
             // Reconstrói o caminho percorrido pelo rato
             while (current != start) {
@@ -65,11 +96,33 @@ vector<pair<int, int>> findPath(const vector<vector<int>>& maze, pair<int, int> 
             reverse(path.begin(), path.end());
 
             // Escreve o caminho encontrado no arquivo de saída
+            cout << "\n\tMelhor Caminho Encontrado, a seguir: " << endl;
+            outputFile << "\n\tMelhor Caminho Encontrado, a seguir: " << endl;
+
+            cout << "\n" << endl;
+            outputFile << "\n" << endl;
+            
             for (const auto& p : path) {
-                outputFile << "i = " << iteration << "; pos = [" << p.first << "," << p.second << "]" << endl;
-                cout << "i = " << iteration << "; pos = [" << p.first << "," << p.second << "]" << endl;
-                iteration++;
+                
+                outputFile << "\t\t(" << p.first + 1<< ", " << p.second + 1<< ")" << endl;
+                cout << "\t\t(" << p.first + 1<< ", " << p.second + 1<< ")" << endl;
+
             }
+            cout << "\n\a~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Fim ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+            outputFile << "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Labirinto ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"<< endl;
+
+            cout << "\n\n" << endl;
+            outputFile << "\n\n" << endl;
+
+            for (const auto& row : maze) {
+                for (auto it = row.begin(); it != row.end() - 1; ++it) {
+                    outputFile << *it << " ";
+                }
+                outputFile << endl;
+            }
+
+            outputFile << "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Fim ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"<< endl;
+
 
             outputFile.close();
             return path;
@@ -116,9 +169,9 @@ vector<vector<int>> readMazeFromFile(const string& filename) {
 
 int main() {
     // Nome do arquivo contendo o labirinto
-    string filename = "labirinto.txt";
+    string filename = "maze.txt";
     // Nome do arquivo de saída
-    string outputFilename = "evolucao_temporal.txt";
+    string outputFilename = "temporal_evolution.txt";
 
     // Lê o labirinto do arquivo
     vector<vector<int>> maze = readMazeFromFile(filename);
@@ -142,17 +195,6 @@ int main() {
 
     // Encontra o caminho do rato até a saída
     vector<pair<int, int>> path = findPath(maze, start, outputFilename);
-
-    // Imprime o caminho encontrado
-    if (!path.empty()) {
-        cout << "Caminho encontrado e evolução temporal salva em " << outputFilename << endl;
-        for (const auto& p : path) {
-            cout << "(" << p.first + 1<< ", " << p.second + 1<< ")" << endl;;
-        }
-        cout << "Fim\n";
-    } else {
-        cout << "Não foi possível encontrar um caminho até a saída.\n";
-    }
 
     return 0;
 }
